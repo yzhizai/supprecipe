@@ -12,3 +12,5 @@ LazyData: true
 RoxygenNote: 7.1.1
 Imports: 
     Publish
+URL: https://github.com/yzhizai/supprecipe
+BugReports: https://github.com/yzhizai/supprecipe/issues
