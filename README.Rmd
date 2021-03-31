@@ -1,0 +1,49 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# supprecipe
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of supprecipe is to supplement the recipe, especially in feature engineering.
+
+## Installation
+
+You can install  the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("yzhizai/supprecipe")
+```
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(tidymodels)
+library(supprecipe)
+## basic example code
+
+data(cells)
+cells <- select(cells, -case)
+names(cells)[1] <- 'Label' # when use your own data, make sure the first column is your target label, as names with 'Label'
+
+a_recipe <- recipe(Label~., data = cells) %>% 
+  step_zv(all_predictors()) %>% 
+  step_anova(all_predictors(), options = list(p_thresh = 0.05)) %>% 
+  step_mrmr(all_predictors(), options = list(num_feature = 30))
+
+```
