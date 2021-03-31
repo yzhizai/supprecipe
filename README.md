@@ -44,7 +44,7 @@ library(supprecipe)
 
 data(cells)
 cells <- select(cells, -case)
-names(cells)[1] <- 'Label' # when use your own data, make sure the first column is your target label, as names with 'Label'
+names(cells)[1] <- 'Label' # when use your own data, make sure the first column is your target label, and named it with 'Label'
 
 a_recipe <- recipe(Label~., data = cells) %>% 
   step_zv(all_predictors()) %>% 
