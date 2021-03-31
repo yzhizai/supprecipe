@@ -2,7 +2,7 @@
 % Please edit documentation in R/step_anova.R
 \name{step_anova}
 \alias{step_anova}
-\title{A step_* method used for recipe to filter the features}
+\title{A step_* method used in recipe to filter the features using independent sample t test}
 \usage{
 step_anova(
   recipe,
@@ -36,7 +36,7 @@ step_anova(
 a recipe object
 }
 \description{
-A step_* method used for recipe to filter the features
+A step_* method used in recipe to filter the features using independent sample t test
 }
 \examples{
 

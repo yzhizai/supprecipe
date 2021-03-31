@@ -1,7 +1,7 @@
 library(tidymodels)
 library(Publish)
 
-#' A step_* method used for recipe to filter the features
+#' A step_* method used in recipe to filter the features using independent sample t test
 #'
 #' @param recipe a recipe object
 #' @param ... the selected features
