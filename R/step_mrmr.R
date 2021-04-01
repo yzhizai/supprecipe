@@ -1,5 +1,5 @@
-library(tidymodels)
 library(mRMRe)
+library(recipes)
 
 #' a step_* method used in recipe to filter the features using MRMR method
 #'
@@ -52,7 +52,7 @@ step_mrmr <- function(
 
 step_mrmr_new <- function(terms, trained, role, ref_dist, options, skip, id)
 {
-  step(
+  recipes::step(
     subclass = 'mrmr',
     terms = terms,
     role = role,
@@ -78,6 +78,8 @@ prep.step_mrmr <- function(x, training, info = NULL)
 {
   col_names <- terms_select(x$terms, info = info)
 
+  levs <- training$Label
+  training <- mutate(training, Label = ifelse(Label == levs[1], 0, 1))
   t_idx <- which(names(training) == 'Label')
   dt.mrmr <- mRMR.data(as.data.frame(training))
   fs <- new('mRMRe.Filter',

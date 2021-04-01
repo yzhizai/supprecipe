@@ -1,5 +1,5 @@
-library(tidymodels)
 library(Publish)
+library(recipes)
 
 #' A step_* method used in recipe to filter the features using independent sample t test
 #'
@@ -52,7 +52,7 @@ step_anova <- function(
 
 step_anova_new <- function(terms, trained, role, ref_dist, options, skip, id)
 {
-  step(
+  recipes::step(
     subclass = 'anova',
     terms = terms,
     role = role,
