@@ -64,6 +64,16 @@ step_anova_new <- function(terms, trained, role, ref_dist, options, skip, id)
   )
 }
 
+#'  the general prep function used for step_anova
+#'
+#' @param x a recipe object
+#' @param training the data used in recipe
+#' @param info ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
 prep.step_anova <- function(x, training, info = NULL)
 {
   col_names <- terms_select(x$terms, info = info)
@@ -90,6 +100,16 @@ prep.step_anova <- function(x, training, info = NULL)
   )
 }
 
+#'  the general bake function used for step_anova
+#'
+#' @param object a output of prep
+#' @param new_data a new data
+#' @param ... other arguments
+#'
+#' @return
+#' @export
+#'
+#' @examples
 bake.step_anova <- function(object, new_data, ...)
 {
   as_tibble(new_data %>% select('Label', object$ref_dist))

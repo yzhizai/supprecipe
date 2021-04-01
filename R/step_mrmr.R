@@ -64,6 +64,16 @@ step_mrmr_new <- function(terms, trained, role, ref_dist, options, skip, id)
   )
 }
 
+#' The general prep function used for step_mrmr
+#'
+#' @param x a recipe object
+#' @param training the training data
+#' @param info ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
 prep.step_mrmr <- function(x, training, info = NULL)
 {
   col_names <- terms_select(x$terms, info = info)
@@ -88,6 +98,16 @@ prep.step_mrmr <- function(x, training, info = NULL)
   )
 }
 
+#' The general bake function for step_mrmr
+#'
+#' @param object output of prep
+#' @param new_data new data
+#' @param ... other arguments
+#'
+#' @return
+#' @export
+#'
+#' @examples
 bake.step_mrmr <- function(object, new_data, ...)
 {
   as_tibble(new_data %>% select('Label', object$ref_dist))
