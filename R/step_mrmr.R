@@ -1,6 +1,3 @@
-library(mRMRe)
-library(recipes)
-
 #' a step_* method used in recipe to filter the features using MRMR method
 #'
 #' @param recipe a recipe object
@@ -70,6 +67,7 @@ step_mrmr_new <- function(terms, trained, role, ref_dist, options, skip, id)
 #' @param training the training data
 #' @param info ...
 #'
+#' @importFrom recipes prep
 #' @return
 #' @export
 #'
@@ -105,7 +103,7 @@ prep.step_mrmr <- function(x, training, info = NULL)
 #' @param object output of prep
 #' @param new_data new data
 #' @param ... other arguments
-#'
+#' @importFrom recipes bake
 #' @return
 #' @export
 #'

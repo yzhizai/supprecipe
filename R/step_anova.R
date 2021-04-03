@@ -1,6 +1,3 @@
-library(Publish)
-library(recipes)
-
 #' A step_* method used in recipe to filter the features using independent sample t test
 #'
 #' @param recipe a recipe object
@@ -70,6 +67,7 @@ step_anova_new <- function(terms, trained, role, ref_dist, options, skip, id)
 #' @param training the data used in recipe
 #' @param info ...
 #'
+#' @importFrom recipes prep
 #' @return
 #' @export
 #'
@@ -106,6 +104,7 @@ prep.step_anova <- function(x, training, info = NULL)
 #' @param new_data a new data
 #' @param ... other arguments
 #'
+#' @importFrom recipes bake
 #' @return
 #' @export
 #'
