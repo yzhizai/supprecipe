@@ -27,7 +27,7 @@ step_anova <- function(
   ref_dist = NA,
   options = list(p_thresh = 0.05),
 
-  skip = F,
+  skip = T,
   id = rand_id('anova')
 )
 {

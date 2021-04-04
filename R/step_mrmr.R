@@ -27,7 +27,7 @@ step_mrmr <- function(
   ref_dist = NA,
   options = list(num_feature = 30),
 
-  skip = F,
+  skip = T,
   id = rand_id('mrmr')
 )
 {
