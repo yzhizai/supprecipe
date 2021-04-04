@@ -41,9 +41,23 @@ data(cells)
 cells <- select(cells, -case)
 names(cells)[1] <- 'Label' # when use your own data, make sure the first column is your target label, and named it with 'Label'
 
-a_recipe <- recipe(Label~., data = cells) %>% 
+a.rec <- recipe(Label~., data = cells) %>% 
   step_zv(all_predictors()) %>% 
-  step_anova(all_predictors(), options = list(p_thresh = 0.05)) %>% 
-  step_mrmr(all_predictors(), options = list(num_feature = 30))
+  step_normalize(all_predictors()) %>% 
+  step_anova(all_predictors(), skip = T) %>% 
+  step_mrmr(all_predictors(), skip = T)
 
+
+a.mod <- rand_forest() %>% 
+  set_engine('randomForest') %>% 
+  set_mode('classification')
+
+a.wflow <- workflow() %>% 
+  add_recipe(a.rec) %>% 
+  add_model(a.mod)
+
+
+a.model <- fit(a.wflow, data = cells)
+
+predict(a.model, new_data = cells)
 ```

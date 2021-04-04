@@ -40,14 +40,90 @@ library(tidymodels)
 #> x dplyr::lag()     masks stats::lag()
 #> x recipes::step()  masks stats::step()
 library(supprecipe)
+#> 载入需要的程辑包：tidyverse
+#> -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
+#> √ readr   1.4.0     √ forcats 0.5.0
+#> √ stringr 1.4.0
+#> -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+#> x readr::col_factor() masks scales::col_factor()
+#> x purrr::discard()    masks scales::discard()
+#> x dplyr::filter()     masks stats::filter()
+#> x stringr::fixed()    masks recipes::fixed()
+#> x dplyr::lag()        masks stats::lag()
+#> x readr::spec()       masks yardstick::spec()
+#> 载入需要的程辑包：Publish
+#> 载入需要的程辑包：prodlim
+#> 载入需要的程辑包：mRMRe
+#> 载入需要的程辑包：survival
+#> 载入需要的程辑包：igraph
+#> 
+#> 载入程辑包：'igraph'
+#> The following object is masked from 'package:prodlim':
+#> 
+#>     neighborhood
+#> The following object is masked from 'package:tidyr':
+#> 
+#>     crossing
+#> The following object is masked from 'package:tibble':
+#> 
+#>     as_data_frame
+#> The following objects are masked from 'package:purrr':
+#> 
+#>     compose, simplify
+#> The following objects are masked from 'package:dplyr':
+#> 
+#>     as_data_frame, groups, union
+#> The following objects are masked from 'package:dials':
+#> 
+#>     degree, neighbors
+#> The following objects are masked from 'package:stats':
+#> 
+#>     decompose, spectrum
+#> The following object is masked from 'package:base':
+#> 
+#>     union
+#> 
+#> 载入程辑包：'mRMRe'
+#> The following object is masked from 'package:infer':
+#> 
+#>     visualize
 ## basic example code
 
 data(cells)
 cells <- select(cells, -case)
 names(cells)[1] <- 'Label' # when use your own data, make sure the first column is your target label, and named it with 'Label'
 
-a_recipe <- recipe(Label~., data = cells) %>% 
+a.rec <- recipe(Label~., data = cells) %>% 
   step_zv(all_predictors()) %>% 
-  step_anova(all_predictors(), options = list(p_thresh = 0.05)) %>% 
-  step_mrmr(all_predictors(), options = list(num_feature = 30))
+  step_normalize(all_predictors()) %>% 
+  step_anova(all_predictors(), skip = T) %>% 
+  step_mrmr(all_predictors(), skip = T)
+
+
+a.mod <- rand_forest() %>% 
+  set_engine('randomForest') %>% 
+  set_mode('classification')
+
+a.wflow <- workflow() %>% 
+  add_recipe(a.rec) %>% 
+  add_model(a.mod)
+
+
+a.model <- fit(a.wflow, data = cells)
+
+predict(a.model, new_data = cells)
+#> # A tibble: 2,019 x 1
+#>    .pred_class
+#>    <fct>      
+#>  1 PS         
+#>  2 PS         
+#>  3 WS         
+#>  4 PS         
+#>  5 PS         
+#>  6 WS         
+#>  7 WS         
+#>  8 PS         
+#>  9 WS         
+#> 10 WS         
+#> # ... with 2,009 more rows
 ```
